@@ -48,7 +48,7 @@ else()
  # SSE4.1 seems to be not supported by GCC 4.8.4
  # TODO(mingyu): See if we still need sse4.1
  message(STATUS "Enable SSE2 and SSE4.1")
- set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -msse2 -msse4.1 -Wno-unused-result")
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -msse2 -msse4.1 -Wno-unused-result -g")
  # Export compile_commands.json
  set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 endif()
@@ -60,7 +60,7 @@ if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0)
 endif()
 
 # Debug / Release / RelWithDebInfo
-set(CMAKE_BUILD_TYPE Release)
+# set(CMAKE_BUILD_TYPE Release)
 
 # Thirdparty dependencies
 # If CFG_VIEW is turned on, need to install glut (freeglut3-dev) and glew (libglew-dev)
@@ -93,3 +93,27 @@ add_subdirectory(Backend)
 # App
 # =========================
 add_subdirectory(App)
+
+option(BUILD_DOC "Build documentation" ON)
+
+# check if Doxygen is installed
+find_package(Doxygen)
+
+if (DOXYGEN_FOUND)
+    # set input and output files
+    set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/doxygen/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
+
+    # request to configure the file
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    message("Doxygen build started")
+
+    # note the option ALL which allows to build the docs together with the application
+    add_custom_target( doc_doxygen ALL
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM )
+else (DOXYGEN_FOUND)
+  message("Doxygen need to be installed to generate the doxygen documentation")
+endif (DOXYGEN_FOUND)

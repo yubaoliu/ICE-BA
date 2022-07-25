@@ -1,0 +1,7 @@
+{
+    "cmake.configureArgs": ["-DOpenCV_DIR=/home/yubao/Software/install/opencv_3.3.1/share/OpenCV",
+    "-DCMAKE_CXX_FLAGS='-g -O0'",
+    "-DCMAKE_BUILD_TYPE='Debug'"],
+    "cmake.buildArgs": ["-d"],
+    "cmake.exportCompileCommandsFile": true
+}

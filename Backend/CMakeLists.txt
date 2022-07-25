@@ -60,7 +60,7 @@ if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0)
 endif()
 
 # Debug / Release / RelWithDebInfo
-set(CMAKE_BUILD_TYPE Release)
+# set(CMAKE_BUILD_TYPE Release)
 
 # Thirdparty dependencies
 # If CFG_VIEW is turned on, need to install glut (freeglut3-dev) and glew (libglew-dev)

@@ -3,6 +3,8 @@
 
 https://github.com/StevenCui/ICE-BA-Mono-Annotation.git
 
+https://github.com/wangyuanbiubiubiu/ICE-BA-ros.git
+
 -----------------------
 # ICE-BA
 ## ICE-BA: Incremental, Consistent and Efficient Bundle Adjustment for Visual-Inertial SLAM  

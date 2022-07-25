@@ -1,0 +1,87 @@
+{
+    "root": {
+        "data": {
+            "id": "clmxmj1z9p40",
+            "created": 1658568954512,
+            "text": "ICE-BA",
+            "expandState": "expand",
+            "progress": 1
+        },
+        "children": [
+            {
+                "data": {
+                    "id": "clmxqkdhb740",
+                    "created": 1658569270841,
+                    "text": "LocalBA",
+                    "layout_mind_offset": {
+                        "x": -61,
+                        "y": -55
+                    },
+                    "layout": null,
+                    "expandState": "expand",
+                    "layout_right_offset": {
+                        "x": -103,
+                        "y": 128
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "clmy3l2ujy00",
+                            "created": 1658570291109,
+                            "text": "SynchronizeData",
+                            "priority": null,
+                            "note": "# Introduction\n同步数据,如果有新的关键帧的话,还要唤醒GBA\n- step1:先进行一下前后数据的swap\n- step2:遍历所有的输入普通帧(只有一个)根据当前imu测量,用上一帧的pose积分出当前帧的pose,注意存的pose都是Tc0w,位置单独存的时候是twc0.\n用的JPL的四元数,所以是反着的,可以看Indirect Kalman Filter for 3D Attitude Estimation\n- step3:如果当前帧同时还是关键帧的话,会先把当前输入关键帧里的有双目观测的新地图点进行三角化,初始化深度和协方差.\n//step4:遍历m_ITs2,这个就是个记录器,存储了输入LBA的东西以及GBA的东西,(关键帧时就是输入普通帧 + 输入关键帧)\n//step4.1:当输入是普通帧时\n//step4.1.1:先初始化一下这帧的地图点平均深度(用上一帧的平均深度).然后再初始化一下地图点(利用和地图点所在关键帧的相对位姿)的深度，\n// 如果同时是关键帧的话,还要对新的地图点也更新深度,然后再重新算一下这帧的地图点平均深度和协方差\n//step4.1.2:对普通帧进行共视关键帧的关联,包括在共视关键帧的共视关键帧去寻找可能的共视,然后从这些共视里找出图像运动最小的,作为它的最近关键帧\n//step4.1.3:向LBA加进普通帧帧信息,滑窗处理(如果最老的帧是关键帧merge了,或者参考关键帧变了,都会给GBA里对应关键帧先验motion,和先验pose,同时每次滑窗会给LBA最老帧\n// 运动先验),与前5帧的共视关联,生成新的子轨迹,进行预积分的协方差,状态变化,对i时刻ba,bw雅克比等\n//step4.2:当输入还有关键帧时,去看这个函数我的注释吧\n//step4.3:当有关键帧时需要进行全局BA优化,唤醒GBA\n\n# Variables\n\n```\n- list<GlobalMap::InputKeyFrame> m_IKFs1, m_IKFs2\n- vector<LocalFrame> m_LFs;\n- Rigid3D m_T;\n- Point3D m_p;\n- LA::AlignedVector3f m_v, m_ba, m_bw;\n- AlignedVector<IMU::Measurement> m_us;\n```\n\n# Steps\n \n```\n For each ILF in m_LFs2:\n \tif m_T and m_v valid:\n    \tcontinue\n    Camera C;\n\tif m_LFs.empty():\n    \tIMU::InitializeCamera(ILF->m_us, C)\n        \n```\n \n # sd"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "clmy3n16xig0",
+                            "created": 1658570295362,
+                            "text": "UpdateFactors"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "clmy4b9odyo0",
+                            "created": 1658570348118,
+                            "text": "UpdateSchurComplement"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "clmy4m919cw0",
+                            "created": 1658570372024,
+                            "text": "SolveBackSubstitution"
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "clmxqy2rd7c0",
+                    "created": 1658569300667,
+                    "text": "GlobalBA",
+                    "layout_mind_offset": {
+                        "x": 358,
+                        "y": 71
+                    },
+                    "layout": null,
+                    "expandState": "expand",
+                    "layout_right_offset": {
+                        "x": -100,
+                        "y": 42
+                    }
+                },
+                "children": []
+            }
+        ]
+    },
+    "template": "right",
+    "theme": "fresh-blue",
+    "version": "1.4.43"
+}

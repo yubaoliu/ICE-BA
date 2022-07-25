@@ -3,7 +3,7 @@
 version: '2.3'
 services:
   ice-ba:
-    image: yubaoliu/ice-ba:melodic
+    image: yubao/ice-ba:melodic
     build:
         context: .
     # container_name: rds-slam
@@ -22,8 +22,8 @@ services:
         - QT_X11_NO_MITSHM=1
     volumes:
         - /tmp/.X11-unix:/tmp/.X11-unix:rw
-        # - ../SLAM:/root/catkin_ws/src/SLAM
-        # - ${DATASET_DIR}:/root/Dataset
+        - ..:/root/catkin_ws/src/ICE-BA
+        - ${DATASET_DIR}:/root/dataset
         # - ${RESULT_DIR}:/root/results
         # - ../SegNet_ROS:/root/catkin_ws/src/SegNet_ROS
         # - ../MaskRCNN_ROS:/root/catkin_ws/src/MaskRCNN_ROS

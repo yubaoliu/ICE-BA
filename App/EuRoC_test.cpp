@@ -341,7 +341,13 @@ bool create_iba_frame(const vector<cv::KeyPoint>& kps_l,
   return true;
 }
 
-
+/**
+ * @brief 主程序入口
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
 int main(int argc, char** argv) {
   google::InitGoogleLogging(argv[0]);
   google::ParseCommandLineFlags(&argc, &argv, true);

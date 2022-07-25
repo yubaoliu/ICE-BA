@@ -1,0 +1,40 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) ice_ba",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/ice_ba",
+            "args": ["--imgs_folder", 
+                "~/Data/Dataset/EuRoC/V1_01_easy",
+                "--iba_param_path", 
+                "./config/config_of_stereo.txt",
+                "--gba_camera_save_path", 
+                "/tmp/V1_01_easy.txt",
+                "--stereo",
+                "--save_feature"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description":  "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+
+    ]
+}
